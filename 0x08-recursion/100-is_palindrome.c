@@ -1,25 +1,32 @@
 #include "main.h"
 
 /**
+ * string_length - Helper function to calculate the length of a string.
+ * @s: The string to calculate the length of.
+ * Return: The length of the string.
+ */
+int string_length(char *s)
+{
+	if (*s == '\0')
+	return (0);
+	return (1 + string_length(s + 1));
+}
+
+/**
  * is_palindrome_helper - Helper function to check if a string is a palindrome.
  * @s: The string to check.
- * @start: The starting index.
- * @end: The ending index.
- * Return: 1 if the substring is a palindrome, 0 otherwise.
+ * @len: The length of the string.
+ * Return: 1 if the string is a palindrome, 0 otherwise.
  */
-int is_palindrome_helper(char *s, int start, int end)
+int is_palindrome_helper(char *s, int len)
 {
-	if (start >= end)
-	{
+	if (len <= 1)
 	return (1);
-	}
 
-	if (s[start] != s[end])
-	{
+	if (s[0] != s[len - 1])
 	return (0);
-	}
 
-	return (is_palindrome_helper(s, start + 1, end - 1));
+	return (is_palindrome_helper(s + 1, len - 2));
 }
 
 /**
@@ -29,12 +36,7 @@ int is_palindrome_helper(char *s, int start, int end)
  */
 int is_palindrome(char *s)
 {
-	int len = 0;
+	int len = string_length(s);
 
-	while (s[len] != '\0')
-	{
-	len++;
-	}
-
-	return (is_palindrome_helper(s, 0, len - 1));
+	return (is_palindrome_helper(s, len));
 }
